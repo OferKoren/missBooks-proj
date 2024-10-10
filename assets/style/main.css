@@ -12,9 +12,5 @@
 /* Components */
 @import 'cmps/app-header.css';
 @import 'cmps/user-msg.css';
-@import 'cmps/animel-list.css';
-@import 'cmps/season-clock.css';
-@import 'cmps/count-down.css';
-@import 'cmps/watcher-app.css';
 
 @import 'base/helpers.css';

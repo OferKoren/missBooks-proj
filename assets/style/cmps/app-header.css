@@ -2,4 +2,14 @@
     background-color: var(--clr1);
     color: var(--clr1bg);
     padding-block: 1em;
+
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1em;
+
+    align-items: center;
+}
+.nav-bar {
+    display: flex;
+    gap: 0.5em;
 }
