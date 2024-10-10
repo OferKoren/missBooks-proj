@@ -1,0 +1,16 @@
+.book-list {
+    margin: auto;
+    display: grid;
+    gap: 1em;
+
+    justify-content: center;
+    /* grid-auto-flow: column; */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 200px));
+}
+
+.book-list .book-card {
+    background-color: var(--clr-book-card);
+}
+/* .book-list > :nth-child(1) {
+    grid-column: 1/-1;
+} */
