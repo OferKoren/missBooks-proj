@@ -13,7 +13,6 @@ export const bookService = {
 const BOOK_KEY = 'bookDB'
 _createBooks()
 function query(filterBy = {}) {
-    console.log(filterBy)
     return storageService.query(BOOK_KEY).then((books) => {
         if (filterBy.txt) {
             const regExp = new RegExp(filterBy.txt, 'i')
@@ -40,7 +39,6 @@ function save(book) {
         return storageService.put(BOOK_KEY, book)
     } else {
         const newBook = _createBook(book)
-        console.log(newBook)
         return storageService.post(BOOK_KEY, newBook)
     }
 }

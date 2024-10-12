@@ -61,7 +61,7 @@ export function BookIndex() {
                 <section className="book-index">
                     <h2>book index</h2>
                     <button onClick={() => onAddBook()}>add a book</button>
-                    <BookFilter filterBy={filterBy} onSetFilter={onSetFilter} defaultFilterby={{ ...filterBy }} />
+                    <BookFilter filterBy={filterBy} onSetFilter={onSetFilter} defaultFilterby={bookService.getDefaultFilter()} />
                     <BookList books={books} onSelectBook={onSelecteBook} onDeleteBook={onDeleteBook} />
                     {/* <pre>{JSON.stringify(books, null, 2)}</pre> */}
                 </section>

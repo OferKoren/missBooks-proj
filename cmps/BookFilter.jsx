@@ -1,6 +1,6 @@
 const { useState } = React
 export function BookFilter({ filterBy, onSetFilter, defaultFilterby }) {
-    const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
+    const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
 
     function handleChange({ target }) {
         const field = target.name
@@ -25,8 +25,11 @@ export function BookFilter({ filterBy, onSetFilter, defaultFilterby }) {
         onSetFilter(filterByToEdit)
     }
     function onClearFilter() {
+        console.log('clearing filter')
         setFilterByToEdit({ ...defaultFilterby })
+        onSetFilter({ ...defaultFilterby })
     }
+    // console.log('render filter')
     return (
         <section className="book-filter">
             <h2>Filter books:</h2>
