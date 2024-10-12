@@ -1,6 +1,25 @@
+const { useParams, useNavigate, Link } = ReactRouterDOM
+const { useEffect, useState } = React
+
+import { bookService } from '../services/book.service.js'
+
 import { LongTxt } from '../cmps/longTxt.jsx'
-export function BookDetails({ book, onEdit, onBack }) {
-    console.log(book)
+export function BookDetails() {
+    const { bookId } = useParams()
+    const [book, setBook] = useState(null)
+
+    useEffect(() => {
+        loadBook()
+    }, [bookId])
+
+    function loadBook() {
+        bookService
+            .getBookById(bookId)
+            .then(setBook)
+            .catch((err) => {
+                console.log(`${err} error problom getting car`)
+            })
+    }
 
     function getBookDetail(title, content, remark = '') {
         return (
@@ -42,6 +61,7 @@ export function BookDetails({ book, onEdit, onBack }) {
         if (listPrice.amount < 20) return 'low-price'
         return ''
     }
+    if (!book) return <div>loading...</div>
     return (
         <section className="book-details">
             <h2>{book.title}</h2>
@@ -62,8 +82,12 @@ export function BookDetails({ book, onEdit, onBack }) {
                 <span className={`detail-content ${getPriceClass()}`}>{`${book.listPrice.amount} ${book.listPrice.currencyCode}`}</span>
             </div>
 
-            <button onClick={onBack}>back</button>
-            <button onClick={onEdit}>edit</button>
+            <button>
+                <Link to="/book">back</Link>
+            </button>
+            <button>
+                <Link to={`/book/edit/${book.id}`}>edit</Link>
+            </button>
             <div className="book-detaill">
                 <span className="detail-title">Description:</span>
                 <div className="detail-content">

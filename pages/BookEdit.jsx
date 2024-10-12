@@ -1,8 +1,27 @@
+const { useNavigate, useParams, Link } = ReactRouterDOM
 const { useEffect, useState } = React
-export function BookEdit({ book, onSaveEdit, onCancelEdit }) {
-    const title = book.id ? `editing ${book.title}` : `add a book`
-    const [bookToEdit, setBookToEdit] = useState({ ...book })
 
+import { bookService } from '../services/book.service.js'
+
+export function BookEdit() {
+    const navigate = useNavigate()
+    const { bookId } = useParams()
+    const [bookToEdit, setBookToEdit] = useState(bookService.getEmptyBook())
+
+    useEffect(() => {
+        if (bookId) loadBook()
+    }, [bookId])
+
+    function loadBook() {
+        bookService
+            .getBookById(bookId)
+            .then((res) => {
+                setBookToEdit(res)
+            })
+            .catch((err) => {
+                console.log(`${err} error problom getting car`)
+            })
+    }
     function handleChange({ target }) {
         const field = target.name
         // console.log('field:', field)
@@ -38,11 +57,26 @@ export function BookEdit({ book, onSaveEdit, onCancelEdit }) {
 
         setBookToEdit((prevBook) => ({ ...prevBook, listPrice: { ...prevBook.listPrice, [field]: value } }))
     }
-    console.log(bookToEdit)
+    function onSaveBook(ev) {
+        ev.preventDefault()
+        bookService
+            .save(bookToEdit)
+            .then((book) => {
+                console.log('Car Saved')
+            })
+            .catch((err) => {
+                console.log('err:', err)
+            })
+            .finally(() => {
+                navigate('/book')
+            })
+    }
+    if (!bookToEdit) return <div>loading...</div>
+    const title = bookToEdit.id ? `editing ${bookToEdit.title}` : `add a book`
     return (
         <section className="book-edit">
             <h2>{title}</h2>
-            <form onSubmit={(ev) => onSaveEdit(ev, bookToEdit)} action="">
+            <form onSubmit={onSaveBook} action="">
                 <label htmlFor="title">title</label>
                 <input type="text" value={bookToEdit.title} onChange={handleChange} name="title" id="title" placegolder="enter title" />
 
@@ -59,8 +93,8 @@ export function BookEdit({ book, onSaveEdit, onCancelEdit }) {
                 <div className="buttons">
                     {' '}
                     <button>save</button>
-                    <button type="button" onClick={onCancelEdit}>
-                        cancal
+                    <button type="button">
+                        <Link to={bookToEdit.id ? `/book/${bookToEdit.id}` : `/book`}>cancal</Link>
                     </button>
                 </div>
             </form>

@@ -4,6 +4,7 @@ import { bookService } from '../services/book.service.js'
 import { BookDetails } from './BookDetails.jsx'
 import { BookEdit } from './BookEdit.jsx'
 const { useEffect, useState } = React
+const { Link } = ReactRouterDOM
 export function BookIndex() {
     const [books, setBooks] = useState(null)
     const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
@@ -59,27 +60,14 @@ export function BookIndex() {
         <React.Fragment>
             {!selectedBook && (
                 <section className="book-index">
-                    <h2>book index</h2>
-                    <button onClick={() => onAddBook()}>add a book</button>
+                    <button onClick={() => onAddBook()}>
+                        <Link to="/book/edit">add a book</Link>
+                    </button>
+
                     <BookFilter filterBy={filterBy} onSetFilter={onSetFilter} defaultFilterby={bookService.getDefaultFilter()} />
+
                     <BookList books={books} onSelectBook={onSelecteBook} onDeleteBook={onDeleteBook} />
-                    {/* <pre>{JSON.stringify(books, null, 2)}</pre> */}
                 </section>
-            )}
-            {selectedBook && (
-                <React.Fragment>
-                    {isEdit ? (
-                        <BookEdit book={selectedBook} onCancelEdit={() => onCancelEdit()} onSaveEdit={onSaveEdit} />
-                    ) : (
-                        <BookDetails
-                            book={selectedBook}
-                            onBack={() => setSelectedBook(null)}
-                            onEdit={() => {
-                                setIsEdit(true)
-                            }}
-                        />
-                    )}
-                </React.Fragment>
             )}
         </React.Fragment>
     )
