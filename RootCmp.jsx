@@ -4,6 +4,7 @@ import { BookIndex } from './pages/BookIndex.jsx'
 import { BookEdit } from './pages/BookEdit.jsx'
 import { BookDetails } from './pages/BookDetails.jsx'
 import { Home } from './pages/Home.jsx'
+import { UserMsg } from './cmps/UserMsg.jsx'
 
 const { useState, useEffect } = React
 const Router = ReactRouterDOM.HashRouter
@@ -33,6 +34,7 @@ export function App() {
                         <Route path="/about" element={<About />} />
                     </Routes>
                 </main>
+                <UserMsg />
             </section>
         </Router>
     )

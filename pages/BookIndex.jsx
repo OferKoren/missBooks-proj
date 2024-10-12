@@ -1,4 +1,5 @@
 import { BookFilter } from '../cmps/BookFilter.jsx'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
 import { BookList } from '../cmps/BookList.jsx'
 import { bookService } from '../services/book.service.js'
 import { BookDetails } from './BookDetails.jsx'
@@ -28,39 +29,24 @@ export function BookIndex() {
     }
 
     function onDeleteBook(bookId) {
-        bookService.remove(bookId).then(() => {
-            setBooks((books) => books.filter((book) => book.id !== bookId))
-        })
+        bookService
+            .remove(bookId)
+            .then(() => {
+                console.log('here')
+                showSuccessMsg(`successfully deleted ${bookId}`)
+                setBooks((books) => books.filter((book) => book.id !== bookId))
+            })
+            .catch((err) => {
+                showErrorMsg('could not delete the book ')
+            })
     }
 
-    function onSaveEdit(ev, bookToSave) {
-        ev.preventDefault()
-        bookService.save(bookToSave).then((savedBook) => {
-            setSelectedBook(savedBook)
-            setIsEdit(false)
-            setBooks((prevBooks) => prevBooks.map((book) => (book.id === savedBook.id ? savedBook : book)))
-            bookService.query().then((books) => {
-                setBooks(() => books)
-            })
-        })
-    }
-    function onAddBook() {
-        setSelectedBook(() => bookService.getEmptyBook())
-        setIsEdit(true)
-    }
-    function onCancelEdit() {
-        if (!selectedBook.id) {
-            console.log('new book cancal')
-            setSelectedBook(() => null)
-        }
-        setIsEdit(() => false)
-    }
     if (!books) return <div>Loading...</div>
     return (
         <React.Fragment>
             {!selectedBook && (
                 <section className="book-index">
-                    <button onClick={() => onAddBook()}>
+                    <button>
                         <Link to="/book/edit">add a book</Link>
                     </button>
 
