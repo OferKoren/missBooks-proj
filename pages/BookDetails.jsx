@@ -1,3 +1,4 @@
+import { LongTxt } from '../cmps/longTxt.jsx'
 export function BookDetails({ book, onEdit, onBack }) {
     console.log(book)
 
@@ -65,7 +66,9 @@ export function BookDetails({ book, onEdit, onBack }) {
             <button onClick={onEdit}>edit</button>
             <div className="book-detaill">
                 <span className="detail-title">Description:</span>
-                <div className="detail-content">{book.description}</div>
+                <div className="detail-content">
+                    <LongTxt txt={book.description} />
+                </div>
             </div>
         </section>
     )

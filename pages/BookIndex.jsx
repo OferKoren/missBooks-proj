@@ -24,6 +24,11 @@ export function BookIndex() {
     function onSelecteBook(bookId) {
         bookService.getBookById(bookId).then(setSelectedBook)
     }
+    function onDeleteBook(bookId) {
+        bookService.remove(bookId).then(() => {
+            setBooks((books) => books.filter((book) => book.id !== bookId))
+        })
+    }
 
     if (!books) return <div>Loading...</div>
     return (
@@ -32,7 +37,7 @@ export function BookIndex() {
                 <section className="book-index">
                     <h2>book index</h2>
                     <BookFilter filterBy={filterBy} onSetFilter={onSetFilter} defaultFilterby={{ ...filterBy }} />
-                    <BookList books={books} onSelectBook={onSelecteBook} />
+                    <BookList books={books} onSelectBook={onSelecteBook} onDeleteBook={onDeleteBook} />
                     {/* <pre>{JSON.stringify(books, null, 2)}</pre> */}
                 </section>
             )}
