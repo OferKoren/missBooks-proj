@@ -1,5 +1,5 @@
 const { useState } = React
-export function BookFilter({ filterBy, onSetFilter }) {
+export function BookFilter({ filterBy, onSetFilter, defaultFilterby }) {
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
 
     function handleChange({ target }) {
@@ -24,6 +24,9 @@ export function BookFilter({ filterBy, onSetFilter }) {
         ev.preventDefault()
         onSetFilter(filterByToEdit)
     }
+    function onClearFilter() {
+        setFilterByToEdit({ ...defaultFilterby })
+    }
     return (
         <section className="book-filter">
             <h2>Filter books:</h2>
@@ -33,6 +36,9 @@ export function BookFilter({ filterBy, onSetFilter }) {
                 <label htmlFor="price">price</label>
                 <input onChange={handleChange} value={filterByToEdit.price} type="number" name="price" id="price" placeholder="Search by Price" />
                 <button>filter</button>
+                <button type="button" onClick={onClearFilter}>
+                    clear filter
+                </button>
             </form>
         </section>
     )

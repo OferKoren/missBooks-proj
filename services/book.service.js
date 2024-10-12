@@ -4,7 +4,7 @@ import { demoBooks } from '../assets/books.js'
 
 export const bookService = {
     query,
-    get,
+    getBookById,
     remove,
     save,
     getEmptyBook,
@@ -26,7 +26,7 @@ function query(filterBy = {}) {
     })
 }
 
-function get(bookId) {
+function getBookById(bookId) {
     return storageService.get(BOOK_KEY, bookId)
 }
 

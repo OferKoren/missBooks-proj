@@ -1,6 +1,6 @@
 import { BookPreview } from './BookPreview.jsx'
 
-export function BookList({ books }) {
+export function BookList({ books, onSelectBook }) {
     return (
         <section className="book-list">
             {/* <h2>BookList</h2> */}
@@ -9,7 +9,7 @@ export function BookList({ books }) {
                 return (
                     <div key={book.id} className="book-card">
                         <BookPreview book={book} />
-                        <button>details</button>
+                        <button onClick={() => onSelectBook(book.id)}>details</button>
                         <button>delete</button>
                     </div>
                 )
