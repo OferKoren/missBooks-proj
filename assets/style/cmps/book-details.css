@@ -1,0 +1,25 @@
+.book-details .high-price {
+    color: red;
+}
+.book-details .low-price {
+    color: green;
+}
+.img-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+.img-wrapper .on-sale {
+    color: green;
+    font-size: 1.5em;
+    position: absolute;
+    top: 0;
+    background-color: white;
+
+    transform-origin: 50%;
+    transform: rotate(-45deg);
+
+    padding: 0 1em;
+    text-align: center;
+    top: 24px;
+    left: -30px;
+}
