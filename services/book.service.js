@@ -1,4 +1,4 @@
-import { loadFromStorage, makeId, saveToStorage } from './util.service.js'
+import { loadFromStorage, makeId, saveToStorage, utilService } from './util.service.js'
 import { storageService } from './async-storage.service.js'
 import { demoBooks } from '../assets/books.js'
 
@@ -35,16 +35,18 @@ function remove(bookId) {
     return storageService.remove(BOOK_KEY, bookId)
 }
 
-function save(car) {
-    if (car.id) {
-        return storageService.put(BOOK_KEY, car)
+function save(book) {
+    if (book.id) {
+        return storageService.put(BOOK_KEY, book)
     } else {
-        return storageService.post(BOOK_KEY, car)
+        const newBook = _createBook(book)
+        console.log(newBook)
+        return storageService.post(BOOK_KEY, newBook)
     }
 }
 //todo change herre
-function getEmptyBook(vendor = '', speed = '') {
-    return { vendor, speed }
+function getEmptyBook(title = '', amount = '') {
+    return { title, listPrice: { amount } }
 }
 //todo change herre
 function getDefaultFilter() {
@@ -59,8 +61,9 @@ function _createBooks() {
     }
 }
 // todo change here
-function _createBook(vendor, speed = 250) {
-    const car = getEmptyCar(vendor, speed)
-    car.id = makeId()
-    return car
+function _createBook(book) {
+    const randBook = demoBooks[utilService.getRandomIntInclusive(0, 19)]
+    const newBook = { ...randBook, title: book.title }
+    newBook.listPrice.amount = book.listPrice.amount
+    return newBook
 }
