@@ -9,8 +9,10 @@ const { Link, useSearchParams } = ReactRouterDOM
 export function BookIndex() {
     const [books, setBooks] = useState(null)
     const [selectedBook, setSelectedBook] = useState(null)
+
     const [searchParams, setSearchParams] = useSearchParams()
     const [filterBy, setFilterBy] = useState(bookService.getFilterFromSearchParams(searchParams))
+
     useEffect(() => {
         setSearchParams(getTruthyValues(filterBy))
         loadBooks()
