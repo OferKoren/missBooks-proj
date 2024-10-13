@@ -4,7 +4,7 @@ const { useEffect, useState } = React
 import { bookService } from '../services/book.service.js'
 import { AddReview } from '../cmps/AddReview.jsx'
 import { ReviewsList } from '../cmps/ReviewsList.jsx'
-import { LongTxt } from '../cmps/longTxt.jsx'
+import { LongTxt } from '../cmps/LongTxt.jsx'
 import { showSuccessMsg } from '../services/event-bus.service.js'
 export function BookDetails() {
     const { bookId } = useParams()
