@@ -1,4 +1,5 @@
 export function ReviewsList({ reviews, onDeleteReview }) {
+    if (!reviews) return
     return (
         <section className="review-list">
             {reviews.map((review) => {

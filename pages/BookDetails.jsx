@@ -77,6 +77,12 @@ export function BookDetails() {
     if (!book) return <div>loading...</div>
     return (
         <section className="book-details">
+            <button>
+                <Link to={`/book/${book.prevBookId}`}>prev book</Link>
+            </button>
+            <button>
+                <Link to={`/book/${book.nextBookId}`}>next book</Link>
+            </button>
             <h2>{book.title}</h2>
             <h3>{book.subtitle}</h3>
             <div className="img-wrapper">

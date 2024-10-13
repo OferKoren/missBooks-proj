@@ -29,7 +29,7 @@ function query(filterBy = {}) {
 }
 
 function getBookById(bookId) {
-    return storageService.get(BOOK_KEY, bookId)
+    return storageService.get(BOOK_KEY, bookId).then(_setNextPrevBookId)
 }
 
 function remove(bookId) {
@@ -91,4 +91,14 @@ function _createBook(book) {
     const newBook = { ...randBook, title: book.title }
     newBook.listPrice.amount = book.listPrice.amount
     return newBook
+}
+function _setNextPrevBookId(book) {
+    return query().then((books) => {
+        const carIdx = books.findIndex((currBook) => currBook.id === book.id)
+        const nextCar = books[carIdx + 1] ? books[carIdx + 1] : books[0]
+        const prevCar = books[carIdx - 1] ? books[carIdx - 1] : books[books.length - 1]
+        book.nextBookId = nextCar.id
+        book.prevBookId = prevCar.id
+        return book
+    })
 }
