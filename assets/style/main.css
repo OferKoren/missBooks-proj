@@ -15,5 +15,6 @@
 @import 'cmps/book-list.css';
 @import 'cmps/book-details.css';
 @import 'cmps/book-edit.css';
+@import 'cmps/review-list.css';
 
 @import 'base/helpers.css';

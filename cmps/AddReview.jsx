@@ -2,7 +2,7 @@ import { bookService } from '../services/book.service.js'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
 const { useState, useEffect, useRef } = React
 
-export function AddReview({ bookId }) {
+export function AddReview({ bookId, onUpdateBook }) {
     const [review, setReview] = useState(bookService.getEmptyReview())
     function onAddReview(ev) {
         ev.preventDefault()
@@ -10,6 +10,7 @@ export function AddReview({ bookId }) {
         bookService.addReview(bookId, review).then((book) => {
             console.log(book)
             showSuccessMsg('added a review')
+            onUpdateBook(book)
             setReview(() => bookService.getEmptyReview())
         })
     }

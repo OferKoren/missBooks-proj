@@ -11,6 +11,7 @@ export const bookService = {
     getDefaultFilter,
     getEmptyReview,
     addReview,
+    deleteReview,
 }
 const BOOK_KEY = 'bookDB'
 _createBooks()
@@ -61,10 +62,20 @@ function getEmptyReview() {
     }
 }
 function addReview(bookId, review) {
+    review.id = makeId()
     return getBookById(bookId).then((book) => {
         if (book.reviews) book.reviews.unshift(review)
         else book.reviews = [review]
         return storageService.put(BOOK_KEY, book)
+    })
+}
+
+function deleteReview(bookId, reviewId) {
+    return getBookById(bookId).then((book) => {
+        const idx = book.reviews.findIndex((review) => (review.id = reviewId))
+        const editBook = JSON.parse(JSON.stringify(book))
+        editBook.reviews.splice(idx, 1)
+        return storageService.put(BOOK_KEY, editBook)
     })
 }
 function _createBooks() {

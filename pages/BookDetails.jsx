@@ -3,8 +3,9 @@ const { useEffect, useState } = React
 
 import { bookService } from '../services/book.service.js'
 import { AddReview } from '../cmps/AddReview.jsx'
-
+import { ReviewsList } from '../cmps/ReviewsList.jsx'
 import { LongTxt } from '../cmps/longTxt.jsx'
+import { showSuccessMsg } from '../services/event-bus.service.js'
 export function BookDetails() {
     const { bookId } = useParams()
     const [book, setBook] = useState(null)
@@ -62,6 +63,17 @@ export function BookDetails() {
         if (listPrice.amount < 20) return 'low-price'
         return ''
     }
+
+    function onUpdateBook(book) {
+        setBook(() => ({ ...book }))
+    }
+
+    function onDeleteReview(reviewId) {
+        bookService.deleteReview(bookId, reviewId).then((book) => {
+            onUpdateBook(book)
+            showSuccessMsg('deleted review')
+        })
+    }
     if (!book) return <div>loading...</div>
     return (
         <section className="book-details">
@@ -95,7 +107,8 @@ export function BookDetails() {
                     <LongTxt txt={book.description} />
                 </div>
             </div>
-            <AddReview bookId={bookId} />
+            <AddReview bookId={bookId} onUpdateBook={onUpdateBook} />
+            <ReviewsList reviews={book.reviews} onDeleteReview={onDeleteReview} />
         </section>
     )
 }
