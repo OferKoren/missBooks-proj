@@ -2,6 +2,7 @@ const { useParams, useNavigate, Link } = ReactRouterDOM
 const { useEffect, useState } = React
 
 import { bookService } from '../services/book.service.js'
+import { AddReview } from '../cmps/AddReview.jsx'
 
 import { LongTxt } from '../cmps/longTxt.jsx'
 export function BookDetails() {
@@ -94,6 +95,7 @@ export function BookDetails() {
                     <LongTxt txt={book.description} />
                 </div>
             </div>
+            <AddReview bookId={bookId} />
         </section>
     )
 }

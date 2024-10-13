@@ -9,6 +9,8 @@ export const bookService = {
     save,
     getEmptyBook,
     getDefaultFilter,
+    getEmptyReview,
+    addReview,
 }
 const BOOK_KEY = 'bookDB'
 _createBooks()
@@ -42,15 +44,29 @@ function save(book) {
         return storageService.post(BOOK_KEY, newBook)
     }
 }
-//todo change herre
+
 function getEmptyBook(title = '', amount = '') {
     return { title, listPrice: { amount } }
 }
-//todo change herre
+
 function getDefaultFilter() {
     return { txt: '', price: '' }
 }
 
+function getEmptyReview() {
+    return {
+        name: '',
+        rating: '',
+        date: '',
+    }
+}
+function addReview(bookId, review) {
+    return getBookById(bookId).then((book) => {
+        if (book.reviews) book.reviews.unshift(review)
+        else book.reviews = [review]
+        return storageService.put(BOOK_KEY, book)
+    })
+}
 function _createBooks() {
     let books = loadFromStorage(BOOK_KEY)
     if (!books || !books.length) {
@@ -58,7 +74,7 @@ function _createBooks() {
         saveToStorage(BOOK_KEY, books)
     }
 }
-// todo change here
+
 function _createBook(book) {
     const randBook = demoBooks[utilService.getRandomIntInclusive(0, 19)]
     const newBook = { ...randBook, title: book.title }

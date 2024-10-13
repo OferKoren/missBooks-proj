@@ -25,7 +25,7 @@ export function App() {
                 <AppHeader onSetPage={onSetPage} />
                 <main className="main-layout">
                     <Routes>
-                        <Route path="/" element={<Navigate to="/home" />} />
+                        <Route path="/" element={<Navigate to="/book" />} />
                         <Route path="/home" element={<Home />} />
                         <Route path="/book" element={<BookIndex />} />
                         <Route path="/book/:bookId" element={<BookDetails />} />
