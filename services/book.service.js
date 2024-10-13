@@ -13,6 +13,7 @@ export const bookService = {
     getEmptyReview,
     addReview,
     deleteReview,
+    getPriceStats,
 }
 const BOOK_KEY = 'bookDB'
 _createBooks()
@@ -87,6 +88,33 @@ function getFilterFromSearchParams(searchParams) {
         txt,
         price,
     }
+}
+
+function getPriceStats() {
+    return storageService.query(BOOK_KEY).then((books) => {
+        const bookCountByPrice = _getBookCountByPriceMap(books)
+        bookCountByPrice
+        const data = Object.keys(bookCountByPrice).map((price) => ({
+            title: price,
+            value: Math.round((bookCountByPrice[price] / books.length) * 100),
+        }))
+        return data
+    })
+}
+
+function _getBookCountByPriceMap(books) {
+    const bookCountByPriceMap = books.reduce(
+        (map, book) => {
+            const price = book.listPrice.amount
+            const isOnSale = book.listPrice.isOnSale
+            if (price < 50) map.cheap++
+            else if (price < 150) map.normal++
+            else map.expensive++
+            return map
+        },
+        { cheap: 0, normal: 0, expensive: 0 }
+    )
+    return bookCountByPriceMap
 }
 
 function _createBooks() {
