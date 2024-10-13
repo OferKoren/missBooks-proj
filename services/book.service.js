@@ -9,6 +9,7 @@ export const bookService = {
     save,
     getEmptyBook,
     getDefaultFilter,
+    getFilterFromSearchParams,
     getEmptyReview,
     addReview,
     deleteReview,
@@ -78,6 +79,16 @@ function deleteReview(bookId, reviewId) {
         return storageService.put(BOOK_KEY, editBook)
     })
 }
+
+function getFilterFromSearchParams(searchParams) {
+    const txt = searchParams.get('txt') || ''
+    const price = searchParams.get('price') || ''
+    return {
+        txt,
+        price,
+    }
+}
+
 function _createBooks() {
     let books = loadFromStorage(BOOK_KEY)
     if (!books || !books.length) {

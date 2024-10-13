@@ -60,6 +60,16 @@ function makeLorem(size = 100) {
     return txt
 }
 
+export function getTruthyValues(obj) {
+    const newObj = {}
+    for (const key in obj) {
+        const value = obj[key]
+        if (value || value === 0) {
+            newObj[key] = value
+        }
+    }
+    return newObj
+}
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min)
     max = Math.floor(max)
