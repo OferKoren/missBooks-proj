@@ -49,7 +49,7 @@ export function BookIndex() {
             {!selectedBook && (
                 <section className="book-index">
                     <button>
-                        <Link to="/book/edit">add a book</Link>
+                        <Link to="/book/add">add a book</Link>
                     </button>
 
                     <BookFilter filterBy={filterBy} onSetFilter={onSetFilter} defaultFilterby={bookService.getDefaultFilter()} />

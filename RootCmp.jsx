@@ -6,7 +6,7 @@ import { BookDetails } from './pages/BookDetails.jsx'
 import { Home } from './pages/Home.jsx'
 import { UserMsg } from './cmps/UserMsg.jsx'
 import { Dashboard } from './pages/Dashboard.jsx'
-
+import { BookAdd } from './pages/BookAdd.jsx'
 const { useState, useEffect } = React
 const Router = ReactRouterDOM.HashRouter
 const { Routes, Route, Navigate } = ReactRouterDOM
@@ -31,6 +31,7 @@ export function App() {
                         <Route path="/book" element={<BookIndex />} />
                         <Route path="/book/:bookId" element={<BookDetails />} />
                         <Route path="/book/edit" element={<BookEdit />} />
+                        <Route path="/book/add" element={<BookAdd />} />
                         <Route path="/book/edit/:bookId" element={<BookEdit />} />
                         <Route path="/about" element={<About />} />
                         <Route path="/dashboard" element={<Dashboard />} />

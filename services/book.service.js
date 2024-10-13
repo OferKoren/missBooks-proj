@@ -14,6 +14,8 @@ export const bookService = {
     addReview,
     deleteReview,
     getPriceStats,
+    getGoogleBooks,
+    addGoogleBook,
 }
 const BOOK_KEY = 'bookDB'
 _createBooks()
@@ -102,6 +104,29 @@ function getPriceStats() {
     })
 }
 
+function getGoogleBooks(search) {
+    if (!search) return Promise.resolve([])
+    console.log(search)
+    const url = `https://www.googleapis.com/books/v1/volumes?printType=books&q=${encodeURIComponent(search)}`
+    return axios.get(url).then((res) => {
+        const books = res.data.items
+        return books
+    })
+}
+
+function addGoogleBook(book) {
+    const formatedBook = _formatGoogleBook(book)
+    return storageService.post(BOOK_KEY, formatedBook)
+}
+
+function _formatGoogleBook(book) {
+    console.log(book)
+    const { volumeInfo, id } = book
+    const { title, authors, publishedDate, description, pageCount, categories, language, imageLinks } = volumeInfo
+    const { thumbnail } = imageLinks
+    const listPrice = { amount: 110, currencyCode: 'USD', isOnSale: false }
+    return { id, title, authors, publishedDate, description, pageCount, language, thumbnail, categories, listPrice }
+}
 function _getBookCountByPriceMap(books) {
     const bookCountByPriceMap = books.reduce(
         (map, book) => {

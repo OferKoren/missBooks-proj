@@ -7,6 +7,7 @@ export const utilService = {
     getDayName,
     getMonthName,
     animateCSS,
+    debounce,
 }
 
 export function makeId(length = 6) {
@@ -108,4 +109,14 @@ function animateCSS(el, animation = 'bounce') {
 
         el.addEventListener('animationend', handleAnimationEnd, { once: true })
     })
+}
+
+function debounce(func, delay) {
+    let timeoutId
+    return (...args) => {
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => {
+            func(...args)
+        }, delay)
+    }
 }
